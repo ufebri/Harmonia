@@ -1,0 +1,54 @@
+name: Android Code Coverage
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  code-coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Setup JDK
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      # Step 3: Cache Gradle dependencies
+      - name: Cache Gradle
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle
+
+      # Step 4: Run tests and generate Jacoco report
+      - name: Run tests with Jacoco
+        run: ./gradlew clean test jacocoTestReport
+
+      # Step 5: Upload Jacoco report to Codecov
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: build/reports/jacoco/test/jacocoTestReport.xml
+          flags: unittests
+          fail_ci_if_error: true
+
+      # Step 6: Upload coverage report as artifact (optional)
+      - name: Upload Coverage Report as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: build/reports/jacoco/test/html/
