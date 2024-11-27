@@ -9,3 +9,4 @@ Changelog
 
 v1.0 - Main Feature
 - Cancer Detector using TensorflowLite
+- Customizable Splashscreen
