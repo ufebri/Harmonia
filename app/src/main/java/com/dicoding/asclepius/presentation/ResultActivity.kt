@@ -1,4 +1,4 @@
-package com.dicoding.asclepius.view
+package com.dicoding.asclepius.presentation
 
 import android.net.Uri
 import android.os.Bundle
