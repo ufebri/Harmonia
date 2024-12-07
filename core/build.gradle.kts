@@ -23,10 +23,10 @@ android {
         multiDexEnabled = true
         consumerProguardFiles("consumer-rules.pro")
 
-        buildConfigField("String", "BASE_URL", apikeyProperties["BASE_URL"] as String)
-        buildConfigField("String", "API_KEY", apikeyProperties["API_KEY"] as String)
-        buildConfigField("String", "DB_NAME", apikeyProperties["DB_NAME"] as String)
-        buildConfigField("String", "DB_PASS", apikeyProperties["DB_PASS"] as String)
+        buildConfigField("String", "BASE_URL", "\"${apikeyProperties["BASE_URL"] as String}\"")
+        buildConfigField("String", "API_KEY", "\"${apikeyProperties["API_KEY"] as String}\"")
+        buildConfigField("String", "DB_NAME", "\"${apikeyProperties["DB_NAME"] as String}\"")
+        buildConfigField("String", "DB_PASS", "\"${apikeyProperties["DB_PASS"] as String}\"")
     }
 
     buildTypes {

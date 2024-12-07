@@ -3,7 +3,6 @@ package febri.uray.bedboy.core.data.source.remote
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import febri.uray.bedboy.core.data.source.remote.network.ApiService
-import febri.uray.bedboy.core.data.source.remote.response.Articles
 import febri.uray.bedboy.core.data.source.remote.response.toListDomain
 import febri.uray.bedboy.core.domain.model.News
 
