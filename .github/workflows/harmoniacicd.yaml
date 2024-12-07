@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - feature/*
 
 jobs:
   code-coverage:
@@ -49,7 +50,7 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: build/reports/jacoco/test/jacocoTestReport.xml
+          files: core/build/reports/jacoco/test/jacocoTestReport.xml
           flags: unittests
           fail_ci_if_error: true
 
@@ -58,4 +59,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: coverage-report
-          path: build/reports/jacoco/test/html/
+          path: core/build/reports/jacoco/test/html/
