@@ -1,7 +1,12 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.daggerHilt)
+    alias(libs.plugins.ksp)
+    id("jacoco")
 }
+
+apply("../shared_dependencies.gradle")
 
 android {
     namespace = "com.dicoding.asclepius"
@@ -25,13 +30,16 @@ android {
                 "proguard-rules.pro"
             )
         }
+        debug {
+            enableUnitTestCoverage = true
+        }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     buildFeatures {
         viewBinding = true
@@ -39,24 +47,38 @@ android {
     }
 }
 
+tasks.register<JacocoReport>("jacocoTestReport") {
+    dependsOn("testDebugUnitTest")
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+
+    executionData.setFrom(fileTree(buildDir).include("jacoco/testDebugUnitTest.exec"))
+    sourceDirectories.setFrom(files("$projectDir/src/main/java"))
+    classDirectories.setFrom(files("$buildDir/tmp/kotlin-classes/debug"))
+}
+
 dependencies {
 
-    //Core
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.lottie)
+    implementation(libs.glide)
+    implementation(libs.androidx.splashScreen)
+    implementation(libs.androidx.navigation.fragmentKTX)
+    implementation(libs.androidx.navigation.uiKTX)
 
-    //UI
-    implementation("androidx.core:core-splashscreen:1.0.0")
-    implementation("com.google.android.material:material:1.11.0")
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 
-    //Testing
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(project(":core"))
 
-    //Tensor Flow
-    implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
-    implementation("org.tensorflow:tensorflow-lite:2.10.0")
-    implementation("org.tensorflow:tensorflow-lite-support:0.4.0")
+    implementation(libs.tensorflow.lite.metadata)
+    implementation(libs.tensorflow.lite)
+    implementation(libs.tensorflow.lite.support)
 }

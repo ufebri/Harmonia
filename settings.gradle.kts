@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Asclepius"
 include(":app")
- 
+include(":core")

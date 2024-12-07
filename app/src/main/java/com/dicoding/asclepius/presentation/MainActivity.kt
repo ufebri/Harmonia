@@ -1,4 +1,4 @@
-package com.dicoding.asclepius.view
+package com.dicoding.asclepius.presentation
 
 import android.app.Activity
 import android.content.Intent
@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen()
         setContentView(binding.root)
 
         imageClassifierHelper = ImageClassifierHelper(this)
