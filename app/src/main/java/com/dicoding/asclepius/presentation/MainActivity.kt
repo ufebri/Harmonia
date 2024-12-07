@@ -7,18 +7,18 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.dicoding.asclepius.databinding.ActivityMainBinding
 import com.dicoding.asclepius.helper.ImageClassifierHelper
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private lateinit var imageClassifierHelper: ImageClassifierHelper
-    private var currentImageUri: Uri? = null
-
+    private val viewModel: MainViewModel by viewModels()
     private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +29,10 @@ class MainActivity : AppCompatActivity() {
         pickImageLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
-                    currentImageUri = result.data?.data
-                    showImage()
+                    viewModel.currentImageUri = result.data?.data
+                    viewModel.currentImageUri?.let { uri ->
+                        showImage(uri)
+                    }
                 } else {
                     showToast("Gambar tidak ditemukan. Silakan coba lagi.")
                 }
@@ -39,6 +41,10 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             galleryButton.setOnClickListener { startGallery() }
             analyzeButton.setOnClickListener { analyzeImage() }
+        }
+
+        viewModel.currentImageUri?.let { uri ->
+            showImage(uri)
         }
     }
 
@@ -49,17 +55,20 @@ class MainActivity : AppCompatActivity() {
         pickImageLauncher.launch(intent)
     }
 
-    private fun showImage() {
-        currentImageUri?.let {
+    private fun showImage(uri: Uri?) {
+        uri.let {
             // Menampilkan gambar di UI (misalnya ImageView)
             binding.previewImageView.setImageURI(it)
         }
     }
 
     private fun analyzeImage() {
-        currentImageUri?.let {
+        viewModel.currentImageUri?.let {
             val (resultLabel, imageUriString) = imageClassifierHelper.classifyStaticImage(it)
                 ?: return showToast("Klasifikasi gagal. Silakan coba lagi.")
+
+            viewModel.resultLabel = resultLabel
+
             moveToResult(resultLabel, imageUriString)
         }
     }
