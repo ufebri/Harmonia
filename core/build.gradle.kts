@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
     alias(libs.plugins.parcelize)
+    id("jacoco")
 }
 
 apply("../shared_dependencies.gradle")
@@ -55,6 +56,19 @@ android {
     buildFeatures {
         buildConfig = true
     }
+}
+
+tasks.register<JacocoReport>("jacocoTestReport") {
+    dependsOn("testDebugUnitTest")
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+
+    executionData.setFrom(fileTree(buildDir).include("jacoco/testDebugUnitTest.exec"))
+    sourceDirectories.setFrom(files("$projectDir/src/main/java"))
+    classDirectories.setFrom(files("$buildDir/tmp/kotlin-classes/debug"))
 }
 
 dependencies {
