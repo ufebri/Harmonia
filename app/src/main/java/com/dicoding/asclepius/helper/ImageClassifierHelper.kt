@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
-import android.provider.MediaStore
+import android.provider.MediaStore.Images.Media.getBitmap
 import com.dicoding.asclepius.ml.CancerClassification
 import org.tensorflow.lite.support.image.TensorImage
 
@@ -42,7 +42,7 @@ class ImageClassifierHelper(private val context: Context) {
             val source = ImageDecoder.createSource(context.contentResolver, imageUri)
             ImageDecoder.decodeBitmap(source).copy(Bitmap.Config.ARGB_8888, true)
         } else {
-            MediaStore.Images.Media.getBitmap(context.contentResolver, imageUri).copy(Bitmap.Config.ARGB_8888, true)
+            getBitmap(context.contentResolver, imageUri).copy(Bitmap.Config.ARGB_8888, true)
         }
     }
 }
