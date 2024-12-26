@@ -3,17 +3,18 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.daggerHilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.google.services)
     id("jacoco")
 }
 
 apply("../shared_dependencies.gradle")
 
 android {
-    namespace = "com.dicoding.asclepius"
+    namespace = "id.daydream.harmonia"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.dicoding.asclepius"
+        applicationId = "id.daydream.harmonia"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -62,21 +63,22 @@ tasks.register<JacocoReport>("jacocoTestReport") {
 
 dependencies {
 
-    implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
     implementation(libs.lottie)
     implementation(libs.glide)
     implementation(libs.androidx.splashScreen)
     implementation(libs.androidx.navigation.fragmentKTX)
     implementation(libs.androidx.navigation.uiKTX)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.constraintlayout)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(project(":core"))
+    implementation(project(":uicomponent"))
 
     implementation(libs.tensorflow.lite.metadata)
     implementation(libs.tensorflow.lite)

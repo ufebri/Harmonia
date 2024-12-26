@@ -1,5 +1,6 @@
 package febri.uray.bedboy.core.util
 
+import febri.uray.bedboy.core.util.DateUtil.formatDate
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 import java.text.SimpleDateFormat
@@ -47,5 +48,14 @@ class DateUtilTest {
             expectedToday.substring(0, 10),
             actualToday.substring(0, 10)
         ) // Hanya periksa tanggal
+    }
+
+    @Test
+    fun `formatDate returns correct formatted date for valid input`() {
+        val inputDate = "2024-12-06T15:44:40Z"
+        val expectedOutput = "Friday, 06 - December - 2024" // Sesuai Locale.getDefault()
+
+        val actualOutput = formatDate(inputDate)
+        assertEquals(expectedOutput, actualOutput)
     }
 }
