@@ -15,6 +15,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Decode google-services.json
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON_B64 }}" | base64 --decode > ./app/google-services.json
+
       # Step 2: Setup JDK
       - name: Setup JDK
         uses: actions/setup-java@v3
@@ -28,6 +31,7 @@ jobs:
           echo "BASE_URL=${{ secrets.BASE_URL }}" >> config.properties
           echo "DB_NAME=${{ secrets.DB_NAME }}" >> config.properties
           echo "DB_PASS=${{ secrets.DB_PASS }}" >> config.properties
+          echo "WEB_CLIENT_ID=${{ secrets.WEB_CLIENT_ID }}" >> config.properties
 
       - name: Grant execute permission for Gradlew
         run: chmod +x ./gradlew

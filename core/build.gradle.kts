@@ -28,6 +28,7 @@ android {
         buildConfigField("String", "API_KEY", "\"${apikeyProperties["API_KEY"] as String}\"")
         buildConfigField("String", "DB_NAME", "\"${apikeyProperties["DB_NAME"] as String}\"")
         buildConfigField("String", "DB_PASS", "\"${apikeyProperties["DB_PASS"] as String}\"")
+        buildConfigField("String", "WEB_CLIENT_ID", "\"${apikeyProperties["WEB_CLIENT_ID"] as String}\"")
     }
 
     buildTypes {
@@ -58,6 +59,10 @@ android {
     }
 }
 
+jacoco {
+    toolVersion = "0.8.8"
+}
+
 tasks.register<JacocoReport>("jacocoTestReport") {
     dependsOn("testDebugUnitTest")
 
@@ -77,9 +82,9 @@ dependencies {
     //room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    testImplementation(libs.testng)
     ksp(libs.androidx.room.compiler)
     androidTestImplementation(libs.androidx.room.testing)
+
 
     //retrofit
     api(libs.retrofit)
