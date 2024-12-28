@@ -8,7 +8,6 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
 import febri.uray.bedboy.core.domain.usecase.auth.CheckUserLoggedInUseCase
 import id.daydream.harmonia.databinding.ActivityOnboardingBinding
-import id.daydream.harmonia.presentation.MainActivity
 import id.daydream.harmonia.presentation.home.HomeActivity
 import javax.inject.Inject
 

@@ -9,9 +9,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import id.daydream.harmonia.helper.ImageClassifierHelper
 import dagger.hilt.android.AndroidEntryPoint
 import id.daydream.harmonia.databinding.ActivityMainBinding
+import id.daydream.harmonia.helper.ImageClassifierHelper
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
