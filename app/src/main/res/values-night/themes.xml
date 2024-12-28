@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="Base.Theme.Asclepius" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="Base.Theme.Harmonia" parent="Theme.Material3.Dark.NoActionBar">
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>
@@ -49,7 +49,7 @@
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
     </style>
 
-    <style name="Theme.Asclepius" parent="Base.Theme.Asclepius" />
+    <style name="Theme.Harmonia" parent="Base.Theme.Harmonia" />
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <!-- Set the splash screen background, animated icon, and animation
@@ -64,6 +64,6 @@
 
         <!-- Set the theme of the Activity that directly follows your splash
         screen. This is required. -->
-        <item name="postSplashScreenTheme">@style/Theme.Asclepius</item>
+        <item name="postSplashScreenTheme">@style/Theme.Harmonia</item>
     </style>
 </resources>
