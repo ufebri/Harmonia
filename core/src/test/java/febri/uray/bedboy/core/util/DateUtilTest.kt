@@ -1,7 +1,7 @@
 package febri.uray.bedboy.core.util
 
 import febri.uray.bedboy.core.util.DateUtil.formatDate
-import junit.framework.Assert.assertEquals
+import junit.framework.TestCase.assertEquals
 import org.junit.Test
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -13,7 +13,7 @@ class DateUtilTest {
     fun `getYesterdayTimestamp returns correct date`() {
         // Simulasikan waktu sekarang
         val calendar = Calendar.getInstance()
-        calendar.set(2024, Calendar.DECEMBER, 7, 12, 0, 0) // Contoh tanggal: 2024-12-07 12:00:00
+        // calendar.set(2024, Calendar.DECEMBER, 7, 12, 0, 0) // Contoh tanggal: 2024-12-07 12:00:00
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
 
         // Hitung tanggal kemarin
@@ -34,7 +34,7 @@ class DateUtilTest {
     fun `getTodayTimestamp returns correct date`() {
         // Simulasikan waktu sekarang
         val calendar = Calendar.getInstance()
-        calendar.set(2024, Calendar.DECEMBER, 7, 12, 0, 0) // Contoh tanggal: 2024-12-07 12:00:00
+        //calendar.set(2024, Calendar.DECEMBER, 7, 12, 0, 0) // Contoh tanggal: 2024-12-07 12:00:00
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
         // Hitung tanggal hari ini

@@ -59,6 +59,10 @@ android {
     }
 }
 
+jacoco {
+    toolVersion = "0.8.8"
+}
+
 tasks.register<JacocoReport>("jacocoTestReport") {
     dependsOn("testDebugUnitTest")
 
@@ -78,9 +82,9 @@ dependencies {
     //room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    testImplementation(libs.testng)
     ksp(libs.androidx.room.compiler)
     androidTestImplementation(libs.androidx.room.testing)
+
 
     //retrofit
     api(libs.retrofit)

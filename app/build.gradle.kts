@@ -41,11 +41,16 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+        freeCompilerArgs += listOf("-opt-in=kotlin.RequiresOptIn")
     }
     buildFeatures {
         viewBinding = true
         mlModelBinding = true
     }
+}
+
+jacoco {
+    toolVersion = "0.8.10"
 }
 
 tasks.register<JacocoReport>("jacocoTestReport") {
