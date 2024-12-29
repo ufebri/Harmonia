@@ -29,7 +29,7 @@ class SignInWithGoogleUseCaseTest {
     @Test
     fun `signInWithGoogle returns user when idToken is valid`() = runTest {
         // Given
-        val testUser = User(uid = "123", displayName = "John Doe", email = "john@example.com")
+        val testUser = User(uid = "123", displayName = "John Doe", email = "john@example.com", urlPhoto = "")
         whenever(authRepository.signInWithGoogle("valid_token")).thenReturn(testUser)
 
         // When

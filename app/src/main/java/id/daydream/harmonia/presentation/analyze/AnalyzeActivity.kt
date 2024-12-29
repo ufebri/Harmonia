@@ -1,4 +1,4 @@
-package id.daydream.harmonia.presentation
+package id.daydream.harmonia.presentation.analyze
 
 import android.app.Activity
 import android.content.Intent
@@ -10,14 +10,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
-import id.daydream.harmonia.databinding.ActivityMainBinding
+import id.daydream.harmonia.databinding.ActivityAnalyzeBinding
 import id.daydream.harmonia.helper.ImageClassifierHelper
+import id.daydream.harmonia.presentation.analyze.result.ResultActivity
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+class AnalyzeActivity : AppCompatActivity() {
+    private val binding by lazy { ActivityAnalyzeBinding.inflate(layoutInflater) }
     private lateinit var imageClassifierHelper: ImageClassifierHelper
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: AnalyzeViewModel by viewModels()
     private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {

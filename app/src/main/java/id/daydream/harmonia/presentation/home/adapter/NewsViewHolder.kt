@@ -1,4 +1,4 @@
-package id.daydream.harmonia.presentation.adapter
+package id.daydream.harmonia.presentation.home.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide

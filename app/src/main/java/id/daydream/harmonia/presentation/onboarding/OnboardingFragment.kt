@@ -19,7 +19,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import febri.uray.bedboy.core.util.collectWhenStarted
 import id.daydream.harmonia.R
 import id.daydream.harmonia.databinding.FragmentOnboardingBinding
-import id.daydream.harmonia.presentation.MainActivity
+import id.daydream.harmonia.presentation.analyze.AnalyzeActivity
+import id.daydream.harmonia.presentation.home.HomeActivity
 import javax.inject.Inject
 
 private const val ARG_BACKGROUND_COLOR = "param1"
@@ -122,7 +123,7 @@ class OnboardingFragment : Fragment() {
         viewModel.userState.collectWhenStarted(requireActivity()) { user ->
             user?.let {
                 // Sukses login
-                val intent = Intent(requireActivity(), MainActivity::class.java)
+                val intent = Intent(requireActivity(), HomeActivity::class.java)
                 startActivity(intent)
                 requireActivity().finish()
             }

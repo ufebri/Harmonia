@@ -10,4 +10,8 @@
     <string name="retry">Retry</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_title_home">Home</string>
+    <string name="menu_profile_title">Profile</string>
+    <string name="privacy_policy_links">https://webview-super.web.app/harmonia-privacy.html</string>
+    <string name="menu_title_analyze">Analyze</string>
 </resources>
