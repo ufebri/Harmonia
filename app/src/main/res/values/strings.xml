@@ -14,4 +14,5 @@
     <string name="menu_profile_title">Profile</string>
     <string name="privacy_policy_links">https://webview-super.web.app/harmonia-privacy.html</string>
     <string name="menu_title_analyze">Analyze</string>
+    <string name="content_desc_analyze_page">The result of image analyze</string>
 </resources>
