@@ -15,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.daydream.harmonia.databinding.FragmentHomeBinding
 import id.daydream.harmonia.presentation.home.adapter.LoadingStateAdapter
 import id.daydream.harmonia.presentation.home.adapter.NewsAdapter
-import id.daydream.harmonia.presentation.analyze.AnalyzeActivity
 import id.daydream.harmonia.presentation.home.detail.DetailActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

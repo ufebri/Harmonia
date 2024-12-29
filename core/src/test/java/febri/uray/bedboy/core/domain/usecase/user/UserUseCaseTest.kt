@@ -2,7 +2,6 @@ package febri.uray.bedboy.core.domain.usecase.user
 
 import febri.uray.bedboy.core.domain.model.User
 import febri.uray.bedboy.core.domain.repository.AuthRepository
-import febri.uray.bedboy.core.domain.usecase.user.UserUseCase
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNull
 import kotlinx.coroutines.runBlocking
