@@ -42,7 +42,7 @@ class AuthViewModelTest {
     @Test
     fun `userState is updated when signInGoogle is successful`() = runTest {
         // Given (setup)
-        val fakeUser = User("123", "Test User", "test@example.com")
+        val fakeUser = User("123", "Test User", "test@example.com", urlPhoto = "")
         whenever(signInWithGoogleUseCase("valid_token")).thenReturn(fakeUser)
 
         // Siapkan list untuk menampung hasil userState
