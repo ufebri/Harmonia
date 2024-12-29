@@ -1,4 +1,4 @@
-package febri.uray.bedboy.core.domain.auth
+package febri.uray.bedboy.core.domain.usecase.auth
 
 import febri.uray.bedboy.core.domain.model.User
 import febri.uray.bedboy.core.domain.repository.AuthRepository
