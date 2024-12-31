@@ -107,7 +107,14 @@ jobs:
           node-version: '18'
 
       - name: Install Firebase CLI
-        run: npm install -g firebase-tools
+        run: npm install -g firebase-tools@latest
+
+      - name: Verify Firebase CLI and Authentication
+        run: |
+          firebase --version
+          firebase projects:list
+        env:
+          FIREBASE_AUTH_TOKEN: ${{ secrets.FIREBASE_AUTH_TOKEN }}
 
       # Step 2: Download environment files
       - name: Download environment files
@@ -139,3 +146,4 @@ jobs:
             app/build/outputs/apk/debug/app-debug.apk \
             --app ${{ secrets.FIREBASE_APP_ID }} \
             --groups internal-tester
+            --debug
