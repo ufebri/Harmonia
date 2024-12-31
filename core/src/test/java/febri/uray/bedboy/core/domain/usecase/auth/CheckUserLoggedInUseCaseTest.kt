@@ -1,7 +1,6 @@
-package febri.uray.bedboy.core.domain.auth
+package febri.uray.bedboy.core.domain.usecase.auth
 
 import febri.uray.bedboy.core.domain.repository.AuthRepository
-import febri.uray.bedboy.core.domain.usecase.auth.CheckUserLoggedInUseCase
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import org.junit.Before

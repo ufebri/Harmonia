@@ -1,8 +1,7 @@
-package febri.uray.bedboy.core.domain.auth
+package febri.uray.bedboy.core.domain.usecase.auth
 
 import febri.uray.bedboy.core.domain.model.User
 import febri.uray.bedboy.core.domain.repository.AuthRepository
-import febri.uray.bedboy.core.domain.usecase.auth.SignInWithGoogleUseCase
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import junit.framework.Assert.assertNull
@@ -29,7 +28,7 @@ class SignInWithGoogleUseCaseTest {
     @Test
     fun `signInWithGoogle returns user when idToken is valid`() = runTest {
         // Given
-        val testUser = User(uid = "123", displayName = "John Doe", email = "john@example.com")
+        val testUser = User(uid = "123", displayName = "John Doe", email = "john@example.com", urlPhoto = "")
         whenever(authRepository.signInWithGoogle("valid_token")).thenReturn(testUser)
 
         // When

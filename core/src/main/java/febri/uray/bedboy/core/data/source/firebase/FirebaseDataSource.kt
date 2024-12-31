@@ -17,7 +17,8 @@ class FirebaseDataSource(
             User(
                 uid = it.uid,
                 displayName = it.displayName,
-                email = it.email
+                email = it.email,
+                urlPhoto = it.photoUrl.toString()
             )
         }
     }
@@ -30,12 +31,12 @@ class FirebaseDataSource(
             User(
                 uid = it.uid,
                 displayName = it.displayName,
-                email = it.email
+                email = it.email,
+                urlPhoto = it.photoUrl.toString()
             )
         }
     }
 
-    fun signOut() {
-        firebaseAuth.signOut()
-    }
+    fun signOut() = firebaseAuth.signOut()
+
 }
