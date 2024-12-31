@@ -16,6 +16,8 @@ import febri.uray.bedboy.core.data.source.firebase.FirebaseDataSource
 import febri.uray.bedboy.core.domain.repository.AuthRepository
 import febri.uray.bedboy.core.domain.usecase.auth.CheckUserLoggedInUseCase
 import febri.uray.bedboy.core.domain.usecase.auth.SignInWithGoogleUseCase
+import febri.uray.bedboy.core.domain.usecase.user.UserUseCase
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -57,6 +59,12 @@ object FirebaseModule {
     @Provides
     fun provideCheckUserLoggedInUseCase(authRepository: AuthRepository): CheckUserLoggedInUseCase {
         return CheckUserLoggedInUseCase(authRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserUseCase(authRepository: AuthRepository): UserUseCase {
+        return UserUseCase(authRepository)
     }
 
     @Provides

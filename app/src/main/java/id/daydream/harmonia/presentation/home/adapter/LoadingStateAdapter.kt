@@ -1,4 +1,4 @@
-package id.daydream.harmonia.presentation.adapter
+package id.daydream.harmonia.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

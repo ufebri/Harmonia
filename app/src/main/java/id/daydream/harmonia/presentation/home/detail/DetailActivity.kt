@@ -1,4 +1,4 @@
-package id.daydream.harmonia.presentation.detail
+package id.daydream.harmonia.presentation.home.detail
 
 import android.annotation.SuppressLint
 import android.os.Bundle

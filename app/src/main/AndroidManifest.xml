@@ -19,15 +19,15 @@
             android:exported="false"
             android:theme="@style/Base.Theme.Harmonia" />
         <activity
-            android:name=".presentation.detail.DetailActivity"
+            android:name=".presentation.home.detail.DetailActivity"
             android:exported="false"
             android:theme="@style/Base.Theme.Harmonia" />
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.analyze.AnalyzeActivity"
             android:exported="false"
             android:theme="@style/Base.Theme.Harmonia" />
         <activity
-            android:name=".presentation.ResultActivity"
+            android:name=".presentation.analyze.result.ResultActivity"
             android:exported="false"
             android:theme="@style/Base.Theme.Harmonia" />
 
