@@ -84,3 +84,22 @@
 -dontwarn org.openjsse.javax.net.ssl.SSLParameters
 -dontwarn org.openjsse.javax.net.ssl.SSLSocket
 -dontwarn org.openjsse.net.ssl.OpenJSSE
+
+# Firebase Crashlytics
+-keepattributes *Annotation*
+-keep public class * implements com.google.firebase.crashlytics.internal.model.CrashlyticsReport$** { *; }
+-keep public class com.google.firebase.crashlytics.** { *; }
+-dontwarn com.google.firebase.crashlytics.**
+
+# Firebase Auth
+-dontwarn com.google.android.gms.auth.api.credentials.Credential$Builder
+-dontwarn com.google.android.gms.auth.api.credentials.Credential
+-dontwarn com.google.android.gms.auth.api.credentials.CredentialRequest$Builder
+-dontwarn com.google.android.gms.auth.api.credentials.CredentialRequest
+-dontwarn com.google.android.gms.auth.api.credentials.CredentialRequestResponse
+-dontwarn com.google.android.gms.auth.api.credentials.Credentials
+-dontwarn com.google.android.gms.auth.api.credentials.CredentialsClient
+-dontwarn com.google.android.gms.auth.api.credentials.CredentialsOptions$Builder
+-dontwarn com.google.android.gms.auth.api.credentials.CredentialsOptions
+-dontwarn com.google.android.gms.auth.api.credentials.HintRequest$Builder
+-dontwarn com.google.android.gms.auth.api.credentials.HintRequest
