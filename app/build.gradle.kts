@@ -31,11 +31,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    firebaseCrashlytics {
-        nativeSymbolUploadEnabled = true
-        mappingFileUploadEnabled = true
-    }
-
     signingConfigs {
         create("release") {
             storeFile = file(apikeyProperties.getProperty("KEYSTORE_FILE"))
