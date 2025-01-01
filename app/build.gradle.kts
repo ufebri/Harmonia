@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.google.services)
     id("jacoco")
+    id("com.google.firebase.crashlytics")
 }
 
 apply("../shared_dependencies.gradle")
