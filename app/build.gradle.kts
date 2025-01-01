@@ -34,7 +34,7 @@ android {
         create("release") {
             storeFile = file(apikeyProperties.getProperty("KEYSTORE_FILE"))
             storePassword = apikeyProperties.getProperty("KEYSTORE_PASSWORD")
-            keyAlias = apikeyProperties.getProperty("KEY_ALIAS")
+            keyAlias = apikeyProperties.getProperty("KEYSTORE_ALIAS")
             keyPassword = apikeyProperties.getProperty("KEY_PASSWORD")
         }
     }
@@ -47,8 +47,11 @@ android {
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
+            ext.set("enableCrashlytics", true)
         }
         debug {
+            isDebuggable = true
+            ext.set("enableCrashlytics", false)
             isMinifyEnabled = false
             enableUnitTestCoverage = true
         }
