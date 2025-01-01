@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -8,6 +10,11 @@ plugins {
 }
 
 apply("../shared_dependencies.gradle")
+
+val apikeyPropertiesFile = rootProject.file("config.properties")
+val apikeyProperties = Properties().apply {
+    load(apikeyPropertiesFile.inputStream())
+}
 
 android {
     namespace = "id.daydream.harmonia"
@@ -23,15 +30,26 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file(apikeyProperties.getProperty("KEYSTORE_FILE"))
+            storePassword = apikeyProperties.getProperty("KEYSTORE_PASSWORD")
+            keyAlias = apikeyProperties.getProperty("KEY_ALIAS")
+            keyPassword = apikeyProperties.getProperty("KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
         debug {
+            isMinifyEnabled = false
             enableUnitTestCoverage = true
         }
     }
