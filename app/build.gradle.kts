@@ -33,7 +33,7 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file(rootProject.file("app/harmonia.jks"))
+            storeFile = file("./harmonia.jks")
             storePassword = apikeyProperties.getProperty("KEYSTORE_PASSWORD")
             keyAlias = apikeyProperties.getProperty("KEYSTORE_ALIAS")
             keyPassword = apikeyProperties.getProperty("KEY_PASSWORD")

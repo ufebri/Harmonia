@@ -24,7 +24,7 @@ jobs:
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON_B64 }}" | base64 --decode > ./app/google-services.json
 
       - name: Decode harmonia.jks
-        run: echo "${{ secrets.KEYSTORE_FILE }}" | base64 --decode > ./app/harmonia.jks
+        run: echo "${{ secrets.KEYSTORE_FILE }}" | base64 --decode > ./harmonia.jks
 
       # Step 3: Create config.properties
       - name: Create config.properties
@@ -37,7 +37,7 @@ jobs:
           echo "KEYSTORE_ALIAS=${{ secrets.KEYSTORE_ALIAS }}" >> config.properties
           echo "KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}" >> config.properties
           echo "KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> config.properties
-          echo "KEYSTORE_FILE=./app/harmonia.jks" >> config.properties
+          echo "KEYSTORE_FILE=./harmonia.jks" >> config.properties
 
       # Step 4: Upload environment files as artifact
       - name: Upload environment files
