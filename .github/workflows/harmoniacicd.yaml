@@ -3,7 +3,12 @@ name: Android CI/CD Workflow
 on:
   push:
     branches:
-      - '**' # Semua branch untuk code coverage dan firebase-distribution
+      - '**' # Semua branch akan menjalankan CI/CD
+
+  pull_request:
+    branches:
+      - development
+      - master
 
 jobs:
   setup-env:
@@ -18,6 +23,9 @@ jobs:
       - name: Decode google-services.json
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON_B64 }}" | base64 --decode > ./app/google-services.json
 
+      - name: Decode harmonia.jks
+        run: echo "${{ secrets.KEYSTORE_FILE }}" | base64 --decode > ./harmonia.jks
+
       # Step 3: Create config.properties
       - name: Create config.properties
         run: |
@@ -26,6 +34,9 @@ jobs:
           echo "DB_NAME=${{ secrets.DB_NAME }}" >> config.properties
           echo "DB_PASS=${{ secrets.DB_PASS }}" >> config.properties
           echo "WEB_CLIENT_ID=${{ secrets.WEB_CLIENT_ID }}" >> config.properties
+          echo "KEYSTORE_ALIAS=${{ secrets.KEYSTORE_ALIAS }}" >> config.properties
+          echo "KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}" >> config.properties
+          echo "KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> config.properties
 
       # Step 4: Upload environment files as artifact
       - name: Upload environment files
@@ -35,69 +46,14 @@ jobs:
           path: |
             ./app/google-services.json
             ./config.properties
-
-  code-coverage:
-    runs-on: ubuntu-latest
-    needs: setup-env # Pastikan setup-env selesai sebelum job ini berjalan
-
-    steps:
-      # Step 1: Checkout the code
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # Step 2: Download environment files
-      - name: Download environment files
-        uses: actions/download-artifact@v3
-        with:
-          name: env-files
-
-      # Step 3: Setup JDK
-      - name: Setup JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: '20'
-
-      # Step 4: Grant execute permission for Gradlew
-      - name: Grant execute permission for Gradlew
-        run: chmod +x ./gradlew
-
-      # Step 5: Cache Gradle dependencies
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle
-
-      # Step 6: Run tests and generate Jacoco report
-      - name: Run tests and generate Jacoco report
-        run: ./gradlew clean test jacocoTestReport
-
-      # Step 7: Upload Jacoco report to Codecov
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: core/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml
-          flags: unittests
-          fail_ci_if_error: true
-
-      # Step 8: Upload coverage report as artifact
-      - name: Upload Coverage Report as Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage-report
-          path: core/build/reports/jacoco/jacocoTestReport/html/
+            ./harmonia.jks
 
   firebase-distribution:
-    if: startsWith(github.ref, 'refs/heads/feature/') # Hanya berjalan untuk branch feature/*
+    if: startsWith(github.ref, 'refs/heads/feature/')
     runs-on: ubuntu-latest
-    needs: setup-env # Pastikan setup-env selesai sebelum job ini berjalan
+    needs: setup-env
 
     steps:
-      # Step 1: Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -106,6 +62,81 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Download environment files
+        uses: actions/download-artifact@v3
+        with:
+          name: env-files
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '20'
+
+      - name: Grant execute permission for Gradlew
+        run: chmod +x ./gradlew
+
+      - name: Build APK
+        run: ./gradlew assembleDebug
+
+      - name: Distribute APK to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          token: ${{ secrets.FIREBASE_AUTH_TOKEN }}
+          groups: internal-tester
+          file: app/build/outputs/apk/debug/app-debug.apk
+
+#  closed-testing:
+#    if: github.event.pull_request.base.ref == 'development' && startsWith(github.head_ref, 'feature/')
+#    runs-on: ubuntu-latest
+#    needs: setup-env
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '18'
+#
+#      - name: Download environment files
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: env-files
+#
+#      - name: Setup JDK
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'zulu'
+#          java-version: '20'
+#
+#      - name: Grant execute permission for Gradlew
+#        run: chmod +x ./gradlew
+#
+#      - name: Build Release APK
+#        run: ./gradlew assembleRelease
+#
+#      - name: Upload to Play Store
+#        uses: r0adkll/upload-google-play@v1
+#        with:
+#          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+#          packageName: "com.example.app"
+#          releaseFiles: app/build/outputs/apk/release/app-release.apk
+#          track: closed
+#          userFraction: 1.0
+
+  github-release:
+    if: github.event.pull_request.base.ref == 'development' # Berjalan hanya ketika PR ke development
+    runs-on: ubuntu-latest
+    needs: setup-env # Pastikan setup-env selesai sebelum job ini berjalan
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       # Step 2: Download environment files
       - name: Download environment files
         uses: actions/download-artifact@v3
@@ -123,15 +154,68 @@ jobs:
       - name: Grant execute permission for Gradlew
         run: chmod +x ./gradlew
 
-      # Step 5: Build APK
-      - name: Build APK
-        run: ./gradlew assembleDebug
+      # Step 5: Build APK (Release)
+      - name: Build APK (Release)
+        run: ./gradlew assembleRelease
 
-      # Step 7: Distribute APK to Firebase
-      - name: Distribute APK to Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
+      # Step 6: Create GitHub Release
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
         with:
-          appId: ${{ secrets.FIREBASE_APP_ID }}
-          token: ${{ secrets.FIREBASE_AUTH_TOKEN }}
-          groups: internal-tester
-          file: app/build/outputs/apk/debug/app-debug.apk
+          tag_name: ${{ github.ref_name }}
+          release_name: "Release for ${{ github.ref_name }}"
+          draft: false
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 7: Upload APK to GitHub Release
+      - name: Upload APK to GitHub Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: app/build/outputs/apk/release/app-release.apk
+          asset_name: app-release.apk
+          asset_content_type: application/vnd.android.package-archive
+
+  code-coverage:
+    if: github.event.pull_request.base.ref == 'master'
+    runs-on: ubuntu-latest
+    needs: setup-env
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download environment files
+        uses: actions/download-artifact@v3
+        with:
+          name: env-files
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '20'
+
+      - name: Grant execute permission for Gradlew
+        run: chmod +x ./gradlew
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle
+
+      - name: Run tests and generate Jacoco report
+        run: ./gradlew clean test jacocoTestReport
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: core/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml
+          flags: unittests
+          fail_ci_if_error: true
