@@ -47,7 +47,7 @@ jobs:
           path: |
             ./app/google-services.json
             ./config.properties
-            ./harmonia.jks
+            ./app/harmonia.jks
 
   firebase-distribution:
     if: startsWith(github.ref, 'refs/heads/feature/')

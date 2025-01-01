@@ -40,9 +40,8 @@ sqlite = "2.4.0"
 tensorflowLite = "2.10.0"
 tensorflowLiteMetadata = "0.1.0"
 tensorflowLiteSupport = "0.4.0"
-testng = "6.9.6"
 googleServices = "4.3.15"
-crashyltics = "3.0.2"
+crashyltics = "2.9.5"
 
 [libraries]
 android-database-sqlcipher = { module = "net.zetetic:android-database-sqlcipher", version.ref = "androidDatabaseSqlcipher" }
@@ -93,7 +92,6 @@ androidx-datastore = { group = "androidx.datastore", name = "datastore-preferenc
 tensorflow-lite = { module = "org.tensorflow:tensorflow-lite", version.ref = "tensorflowLite" }
 tensorflow-lite-metadata = { module = "org.tensorflow:tensorflow-lite-metadata", version.ref = "tensorflowLiteMetadata" }
 tensorflow-lite-support = { module = "org.tensorflow:tensorflow-lite-support", version.ref = "tensorflowLiteSupport" }
-testng = { group = "org.testng", name = "testng", version.ref = "testng" }
 
 
 [plugins]
