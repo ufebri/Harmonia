@@ -2,9 +2,9 @@ package febri.uray.bedboy.core.domain.usecase.auth
 
 import febri.uray.bedboy.core.domain.model.User
 import febri.uray.bedboy.core.domain.repository.AuthRepository
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertNotNull
-import junit.framework.Assert.assertNull
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertNotNull
+import junit.framework.TestCase.assertNull
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
