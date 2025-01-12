@@ -29,6 +29,8 @@ android {
         buildConfigField("String", "DB_NAME", "\"${apikeyProperties["DB_NAME"] as String}\"")
         buildConfigField("String", "DB_PASS", "\"${apikeyProperties["DB_PASS"] as String}\"")
         buildConfigField("String", "WEB_CLIENT_ID", "\"${apikeyProperties["WEB_CLIENT_ID"] as String}\"")
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {

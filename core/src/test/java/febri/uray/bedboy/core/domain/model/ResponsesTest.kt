@@ -1,8 +1,10 @@
 package febri.uray.bedboy.core.domain.model
 
+import febri.uray.bedboy.core.data.source.local.entity.NewsEntity
 import febri.uray.bedboy.core.data.source.remote.response.Articles
 import febri.uray.bedboy.core.data.source.remote.response.Responses
 import febri.uray.bedboy.core.data.source.remote.response.Source
+import febri.uray.bedboy.core.data.source.remote.response.toEntities
 import febri.uray.bedboy.core.data.source.remote.response.toListDomain
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -58,5 +60,60 @@ class ResponsesTest {
         assertEquals("https://example.com/image2.jpg", secondNews.urlToImage)
         assertEquals("https://example.com/news2", secondNews.url)
         assertEquals("Source 2", secondNews.source)
+    }
+
+    @Test
+    fun `toEntities should map Articles to NewsEntity correctly`() {
+        // Arrange
+        val articles = Articles(
+            title = "Sample Title",
+            publishedAt = "2025-01-01T12:00:00Z",
+            url = "https://example.com",
+            urlToImage = "https://example.com/image.jpg",
+            source = Source(
+                id = "source-id",
+                name = "Source Name"
+            )
+        )
+
+        val expectedEntity = NewsEntity(
+            title = "Sample Title",
+            publishedDate = "2025-01-01T12:00:00Z",
+            url = "https://example.com",
+            coverImage = "https://example.com/image.jpg",
+            sourceName = "Source Name"
+        )
+
+        // Act
+        val result = articles.toEntities()
+
+        // Assert
+        assertEquals(expectedEntity, result)
+    }
+
+    @Test
+    fun `toEntities should handle null source gracefully`() {
+        // Arrange
+        val articles = Articles(
+            title = "Sample Title",
+            publishedAt = "2025-01-01T12:00:00Z",
+            url = "https://example.com",
+            urlToImage = "https://example.com/image.jpg",
+            source = null
+        )
+
+        val expectedEntity = NewsEntity(
+            title = "Sample Title",
+            publishedDate = "2025-01-01T12:00:00Z",
+            url = "https://example.com",
+            coverImage = "https://example.com/image.jpg",
+            sourceName = null
+        )
+
+        // Act
+        val result = articles.toEntities()
+
+        // Assert
+        assertEquals(expectedEntity, result)
     }
 }

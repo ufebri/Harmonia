@@ -4,6 +4,8 @@ dependencies {
 
     implementation(libs.hiltAndroid)
     ksp(libs.hiltAndroidCompiler)
+    testImplementation(libs.hiltAndroid.testing)
+    kspAndroidTest(libs.hiltAndroidCompiler)
 
     implementation(libs.androidx.multidex)
     implementation(libs.androidx.lifecycle.viewmodel)
@@ -20,6 +22,9 @@ dependencies {
     //TESTING
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.test)
+    androidTestImplementation(libs.androidx.junit.ktx)
+
     androidTestImplementation(libs.androidx.espresso.core)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
