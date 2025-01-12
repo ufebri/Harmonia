@@ -34,7 +34,7 @@ class ApiResponseTest {
     @Test
     fun `Empty should be of type ApiResponse_Empty`() {
         // Act
-        val response = ApiResponse.Empty
+        ApiResponse.Empty
 
         // Assert
         assertTrue(true)
